@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4s8tyxatspyb"]
+
+[ext_resource type="Script" uid="uid://cvk383afk60x0" path="res://脚本/移动障碍.gd" id="1_fxwiv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3fsq4"]
+size = Vector3(6, 2, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3fsq4"]
+size = Vector3(6, 2, 4)
+
+[node name="移动障碍" type="AnimatableBody3D" groups=["危险"]]
+script = ExtResource("1_fxwiv")
+"目的地" = Vector3(0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_3fsq4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_3fsq4")

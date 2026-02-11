@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://4xu4uo8681cc"]
+
+[ext_resource type="PackedScene" uid="uid://bns6hpb0pr1u0" path="res://场景/角色.tscn" id="1_mmf08"]
+[ext_resource type="Script" uid="uid://djaxg24cjxr14" path="res://脚本/降落处.gd" id="2_rswuw"]
+[ext_resource type="PackedScene" uid="uid://de8faj3ka7t1f" path="res://场景/天花板背板.tscn" id="3_rswuw"]
+[ext_resource type="Script" uid="uid://drt5xvkx6j1o4" path="res://脚本/FPS显示.gd" id="4_fps"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ao75"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_e8xxl"]
+sky_material = SubResource("ProceduralSkyMaterial_1ao75")
+
+[sub_resource type="Environment" id="Environment_qiy6y"]
+background_mode = 2
+sky = SubResource("Sky_e8xxl")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k5g4l"]
+albedo_color = Color(0.384314, 1, 0.815686, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ao75"]
+albedo_color = Color(0.595071, 0.605947, 0.773692, 1)
+
+[node name="场景" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 7, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qiy6y")
+
+[node name="发射塔" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.2, 0)
+use_collision = true
+size = Vector3(2, 0.4, 2)
+material = SubResource("StandardMaterial3D_k5g4l")
+
+[node name="角色" parent="发射塔" instance=ExtResource("1_mmf08")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+"推力" = 1300.0
+
+[node name="降落处" type="CSGBox3D" parent="." groups=["目标"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.2, 0)
+use_collision = true
+size = Vector3(2, 0.4, 2)
+material = SubResource("StandardMaterial3D_1ao75")
+script = ExtResource("2_rswuw")
+file_path = "uid://bt82vrarn7xyw"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3, 9)
+top_level = true
+current = true
+
+[node name="天花板" parent="." instance=ExtResource("3_rswuw")]
+transform = Transform3D(-0.0637484, -0.997966, 0, 0.997966, -0.0637484, 0, 0, 0, 1, 14.334, 3.75473, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21864, 2.14114)
+light_energy = 6.659
+omni_range = 17.768

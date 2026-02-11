@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqqyw5p1w7bg5"]
+
+[sub_resource type="Curve" id="Curve_k7n75"]
+_data = [Vector2(0, 0.795918), 0.0, 0.0, 0, 0, Vector2(0.507519, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.765306), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_shkdd"]
+curve = SubResource("Curve_k7n75")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rel8f"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(1, -0.575, 0)
+gravity = Vector3(0, -5.915, 0)
+damping_max = 0.769
+scale_curve = SubResource("CurveTexture_shkdd")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n1x45"]
+emission_enabled = true
+emission = Color(0.585062, 0.585062, 0.585062, 1)
+emission_energy_multiplier = 1.53
+
+[sub_resource type="SphereMesh" id="SphereMesh_8841j"]
+material = SubResource("StandardMaterial3D_n1x45")
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 4
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k7n75"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -64.0
+angle_max = 1.07288e-05
+direction = Vector3(1, -0.575, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 4.0
+gravity = Vector3(0, -5.915, 0)
+damping_max = 0.769
+scale_curve = SubResource("CurveTexture_shkdd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_shkdd"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(1, -8.135, 0)
+spread = 20.0
+initial_velocity_min = 9.87
+initial_velocity_max = 14.87
+gravity = Vector3(0, -9.535, 0)
+scale_curve = SubResource("CurveTexture_shkdd")
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.0
+collision_mode = 1
+collision_friction = 0.87
+collision_bounce = 0.21
+
+[node name="粒子测试" type="Node3D"]
+
+[node name="冰雹" type="GPUParticles3D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_rel8f")
+draw_pass_1 = SubResource("SphereMesh_8841j")
+
+[node name="雨雪" type="GPUParticles3D" parent="."]
+visible = false
+process_material = SubResource("ParticleProcessMaterial_k7n75")
+draw_pass_1 = SubResource("SphereMesh_8841j")
+
+[node name="雨雪2" type="GPUParticles3D" parent="."]
+visible = false
+amount = 23
+process_material = SubResource("ParticleProcessMaterial_shkdd")
+draw_pass_1 = SubResource("SphereMesh_8841j")

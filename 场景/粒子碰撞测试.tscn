@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxv3gbkhxo8l7"]
+
+[ext_resource type="PackedScene" uid="uid://dqqyw5p1w7bg5" path="res://场景/粒子测试.tscn" id="1_knrfr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_knrfr"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_iqwml"]
+sky_material = SubResource("ProceduralSkyMaterial_knrfr")
+
+[sub_resource type="Environment" id="Environment_15gu7"]
+background_mode = 2
+sky = SubResource("Sky_iqwml")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_knrfr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mlpb5"]
+size = Vector3(5, 1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knrfr"]
+
+[node name="粒子碰撞测试" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_15gu7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_knrfr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_mlpb5")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
+
+[node name="粒子测试" parent="." instance=ExtResource("1_knrfr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378414, 4.01183, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 1, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_knrfr")

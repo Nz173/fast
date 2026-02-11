@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://bt82vrarn7xyw"]
+
+[ext_resource type="PackedScene" uid="uid://de8faj3ka7t1f" path="res://场景/天花板背板.tscn" id="1_coojf"]
+[ext_resource type="PackedScene" uid="uid://bns6hpb0pr1u0" path="res://场景/角色.tscn" id="1_ktym2"]
+[ext_resource type="Script" uid="uid://djaxg24cjxr14" path="res://脚本/降落处.gd" id="2_coojf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ao75"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+sky_curve = 0.356762
+sky_energy_multiplier = 1.44
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_curve = 0.0348221
+
+[sub_resource type="Sky" id="Sky_e8xxl"]
+sky_material = SubResource("ProceduralSkyMaterial_1ao75")
+
+[sub_resource type="Environment" id="Environment_qiy6y"]
+background_mode = 1
+background_color = Color(0.0786872, 0.0455984, 0.00252388, 1)
+background_energy_multiplier = 0.8
+sky = SubResource("Sky_e8xxl")
+ambient_light_source = 3
+tonemap_mode = 2
+tonemap_exposure = 1.3
+glow_enabled = true
+fog_light_energy = 0.1
+adjustment_enabled = true
+adjustment_saturation = 1.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ptli6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k5g4l"]
+albedo_color = Color(0.384314, 1, 0.815686, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ao75"]
+albedo_color = Color(0.595071, 0.605947, 0.773692, 1)
+
+[node name="场景" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 7, 0)
+shadow_enabled = true
+shadow_opacity = 0.89
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qiy6y")
+
+[node name="天花板" parent="." instance=ExtResource("1_coojf")]
+transform = Transform3D(-0.0645323, -0.997916, 0, 0.997916, -0.0645323, 0, 0, 0, 1, 13.5151, 4, 0)
+
+[node name="障碍" type="CSGBox3D" parent="." groups=["危险"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1, 0)
+use_collision = true
+size = Vector3(5, 2, 3)
+material = SubResource("StandardMaterial3D_ptli6")
+
+[node name="发射塔" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.2, 0)
+use_collision = true
+size = Vector3(2, 0.4, 2)
+material = SubResource("StandardMaterial3D_k5g4l")
+
+[node name="角色" parent="发射塔" instance=ExtResource("1_ktym2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+"推力" = 1300.0
+
+[node name="降落处" type="CSGBox3D" parent="." groups=["目标"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.2, 0)
+use_collision = true
+size = Vector3(2, 0.4, 2)
+material = SubResource("StandardMaterial3D_1ao75")
+script = ExtResource("2_coojf")
+file_path = "uid://rr5ea4wgva4j"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 6.07967, 9)
+top_level = true
+current = true

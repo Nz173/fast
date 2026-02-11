@@ -1,0 +1,136 @@
+[gd_scene load_steps=18 format=3 uid="uid://bns6hpb0pr1u0"]
+
+[ext_resource type="Script" uid="uid://wel5yijevwsv" path="res://脚本/角色.gd" id="1_0fisn"]
+[ext_resource type="AudioStream" uid="uid://c38q7mj1r1nwq" path="res://音频/15.1 15_PB_G3D - Audio Files/15_PB_G3D - Audio Files/SFX - Death Explosion.ogg" id="2_7iefe"]
+[ext_resource type="Material" uid="uid://bw04cq27dy8v2" path="res://new_standard_material_3d.tres" id="2_08v8j"]
+[ext_resource type="AudioStream" uid="uid://ueec28521vkj" path="res://音频/15.1 15_PB_G3D - Audio Files/15_PB_G3D - Audio Files/SFX - Success.ogg" id="3_5vhx8"]
+[ext_resource type="AudioStream" uid="uid://dgfge52vu1sv6" path="res://音频/16_PB_G3D - Audio File/SFX - Main engine thrust.ogg" id="4_m1vcl"]
+[ext_resource type="PackedScene" uid="uid://ux6ivcx1ovdp" path="res://音频/Particles/booster_particles.tscn" id="5_eqpj4"]
+[ext_resource type="PackedScene" uid="uid://dcecb8hw7dbrv" path="res://场景/爆炸粒子簇.tscn" id="6_03wja"]
+[ext_resource type="PackedScene" uid="uid://jfwajmrh6ca7" path="res://场景/胜利.tscn" id="7_08v8j"]
+[ext_resource type="Material" uid="uid://daqofln3sxvr5" path="res://2new_standard_material_3d.tres" id="7_p8peg"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_03wja"]
+height = 1.5
+
+[sub_resource type="PrismMesh" id="PrismMesh_08v8j"]
+left_to_right = 0.0
+size = Vector3(0.545, 0.75, 0.1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_03wja"]
+left_to_right = 1.0
+size = Vector3(0.545, 0.75, 0.1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_p8peg"]
+top_radius = 0.502
+bottom_radius = 0.38
+height = 0.193
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_08v8j"]
+top_radius = 0.0
+height = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ny6l1"]
+height = 0.193
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jd8ar"]
+top_radius = 0.15
+bottom_radius = 0.15
+height = 0.25
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0fisn"]
+
+[node name="角色" type="RigidBody3D"]
+contact_monitor = true
+max_contacts_reported = 10
+linear_damp = 1.0
+angular_damp = 3.0
+script = ExtResource("1_0fisn")
+
+[node name="身体" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("CylinderMesh_03wja")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="身体"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.735942, -0.14078, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("PrismMesh_08v8j")
+skeleton = NodePath("../MeshInstance3D3")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="身体"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.702548, -0.0703899, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("PrismMesh_03wja")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="身体"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.843466, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("CylinderMesh_p8peg")
+skeleton = NodePath("../尾")
+
+[node name="头" type="MeshInstance3D" parent="身体"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("CylinderMesh_08v8j")
+
+[node name="尾" type="MeshInstance3D" parent="身体"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.03046, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("CylinderMesh_ny6l1")
+skeleton = NodePath("../头")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="身体/尾"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.21726, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("CylinderMesh_jd8ar")
+skeleton = NodePath("../MeshInstance3D2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="身体/尾"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -0.21726, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("CylinderMesh_jd8ar")
+skeleton = NodePath(".")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="身体/尾"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.21726, 0)
+material_override = ExtResource("2_08v8j")
+mesh = SubResource("CylinderMesh_jd8ar")
+skeleton = NodePath("../MeshInstance3D2")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 5)
+current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_0fisn")
+
+[node name="爆炸声" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7iefe")
+volume_db = -3.546
+
+[node name="胜利" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5vhx8")
+
+[node name="火箭引擎声" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_m1vcl")
+
+[node name="发射粒子簇左" parent="." instance=ExtResource("5_eqpj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -1.008, 0)
+material_override = ExtResource("7_p8peg")
+
+[node name="发射粒子簇右" parent="." instance=ExtResource("5_eqpj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -1.005, 0)
+material_override = ExtResource("7_p8peg")
+
+[node name="发射粒子簇" parent="." instance=ExtResource("5_eqpj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.00251, 0)
+material_override = ExtResource("7_p8peg")
+
+[node name="爆炸粒子簇" parent="." instance=ExtResource("6_03wja")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.364233, 0)
+
+[node name="胜利粒子簇" parent="." instance=ExtResource("7_08v8j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.477824, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
