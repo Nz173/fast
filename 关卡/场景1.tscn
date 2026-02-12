@@ -63,3 +63,13 @@ transform = Transform3D(-0.0637484, -0.997966, 0, 0.997966, -0.0637484, 0, 0, 0,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21864, 2.14114)
 light_energy = 6.659
 omni_range = 17.768
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FPSLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 60.0
+text = "FPS: --"
+script = ExtResource("4_fps")
