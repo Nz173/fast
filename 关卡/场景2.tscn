@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bt82vrarn7xyw"]
+[gd_scene load_steps=11 format=3 uid="uid://bt82vrarn7xyw"]
 
 [ext_resource type="PackedScene" uid="uid://de8faj3ka7t1f" path="res://场景/天花板背板.tscn" id="1_coojf"]
 [ext_resource type="PackedScene" uid="uid://bns6hpb0pr1u0" path="res://场景/角色.tscn" id="1_ktym2"]
 [ext_resource type="Script" uid="uid://djaxg24cjxr14" path="res://脚本/降落处.gd" id="2_coojf"]
+[ext_resource type="Script" uid="uid://drt5xvkx6j1o4" path="res://脚本/FPS显示.gd" id="4_fps"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1ao75"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -76,3 +77,13 @@ file_path = "uid://rr5ea4wgva4j"
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 6.07967, 9)
 top_level = true
 current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FPSLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 60.0
+text = "FPS: --"
+script = ExtResource("4_fps")

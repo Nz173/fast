@@ -1,19 +1,43 @@
 extends AnimatableBody3D
 
-@export var  目的地: Vector3
-@export var  间隔: float=1.0
+## 移动障碍 - 在起点和目的地之间来回移动
 
+#region 导出变量
+@export var destination: Vector3 = Vector3.ZERO  ## 相对当前位置的移动目标
+@export var duration: float = 1.0                ## 单次移动持续时间（秒）
+@export var wait_time: float = 0.0               ## 到达后等待时间（秒）
+@export var ease_type: Tween.EaseType = Tween.EASE_IN_OUT  ## 缓动类型
+@export var trans_type: Tween.TransitionType = Tween.TRANS_LINEAR  ## 过渡类型
+#endregion
 
-# Called when the node enters the scene tree for the first time.
+var _initial_position: Vector3
+var _tween: Tween
+
 func _ready() -> void:
-	var 绑定=create_tween()
-	绑定.set_loops()
-	绑定.tween_property(self,"global_position",global_position+目的地,间隔)
-	绑定.tween_property(self,"global_position",global_position,间隔)
+	_initial_position = global_position
+	_start_movement()
+
+func _start_movement() -> void:
+	## 停止现有的 tween
+	if _tween and _tween.is_valid():
+		_tween.kill()
 	
-	pass # Replace with function body.
+	_tween = create_tween()
+	_tween.set_loops()
+	_tween.set_ease(ease_type)
+	_tween.set_trans(trans_type)
+	
+	## 移动到目的地
+	if wait_time > 0.0:
+		_tween.tween_interval(wait_time)
+	_tween.tween_property(self, "global_position", _initial_position + destination, duration)
+	
+	## 返回起点
+	if wait_time > 0.0:
+		_tween.tween_interval(wait_time)
+	_tween.tween_property(self, "global_position", _initial_position, duration)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _exit_tree() -> void:
+	## 清理 tween
+	if _tween and _tween.is_valid():
+		_tween.kill()

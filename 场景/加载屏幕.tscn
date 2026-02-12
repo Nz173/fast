@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://cj22nm63dwean"]
+
+[ext_resource type="Script" path="res://脚本/加载屏幕.gd" id="1_load"]
+
+[node name="加载屏幕" type="CanvasLayer" unique_id=1664624254]
+script = ExtResource("1_load")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1635030312]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="LoadingLabel" type="Label" parent="." unique_id=2127687130]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 200.0
+offset_right = 100.0
+offset_bottom = 250.0
+grow_horizontal = 2
+text = "正在加载..."
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=631652971]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 270.0
+offset_right = 150.0
+offset_bottom = 290.0
+grow_horizontal = 2
+show_percentage = false
+
+[node name="LoadingSpinner" type="TextureRect" parent="." unique_id=1343513557]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = 320.0
+offset_right = 25.0
+offset_bottom = 370.0
+grow_horizontal = 2

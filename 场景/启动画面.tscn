@@ -1,0 +1,128 @@
+[gd_scene load_steps=10 format=3 uid="uid://start123"]
+
+[ext_resource type="Script" uid="uid://cn loading_screen" path="res://脚本/启动画面.gd" id="1_start"]
+[ext_resource type="Shader" path="res://资源/星空背景.gdshader" id="2_bg"]
+[ext_resource type="Shader" path="res://资源/加载圈.gdshader" id="3_spinner"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
+shader = ExtResource("2_bg")
+shader_parameter/bg_color = Color(0.02, 0.02, 0.08, 1)
+shader_parameter/nebula_color = Color(0.2, 0.1, 0.4, 0.3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 80
+font_color = Color(0.9, 0.95, 1, 1)
+outline_size = 4
+outline_color = Color(0.1, 0.2, 0.4, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_spinner"]
+shader = ExtResource("3_spinner")
+shader_parameter/base_color = Color(0.4, 0.7, 1, 1)
+shader_parameter/speed = 3.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_loading"]
+font_size = 20
+font_color = Color(0.6, 0.8, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.1, 0.1, 0.2, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.4, 0.6, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill"]
+bg_color = Color(0.2, 0.6, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.8, 1, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.2, 0.6, 1, 0.4)
+shadow_size = 4
+
+[node name="启动画面" type="CanvasLayer"]
+script = ExtResource("1_start")
+
+[node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_bg")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "火箭游戏"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="SpinnerContainer" type="Control" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LoadingSpinner" type="ColorRect" parent="CenterContainer/VBoxContainer/SpinnerContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_spinner")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(40, 40)
+color = Color(1, 1, 1, 0)
+
+[node name="LoadingLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "正在初始化..."
+label_settings = SubResource("LabelSettings_loading")
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 10)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill")
+show_percentage = false
